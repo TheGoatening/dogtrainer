@@ -12,6 +12,7 @@ import { InitializeAppService } from './services/initialize.app.service';
 import { AuthorPostsService } from './services/author-posts.service';
 import { DepartmentEmployeesService } from './services/department-employees.service';
 import { DbnameVersionService } from './services/dbname-version.service';
+import {DogDbService} from "./services/dog-db.service";
 
 export function initializeFactory(init: InitializeAppService) {
   return () => init.initializeApp();
@@ -23,6 +24,7 @@ export function initializeFactory(init: InitializeAppService) {
   providers: [SQLiteService,
     InitializeAppService,
     AuthorPostsService,
+    DogDbService,
     DepartmentEmployeesService,
     DbnameVersionService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

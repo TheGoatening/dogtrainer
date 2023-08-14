@@ -1,0 +1,99 @@
+<ion-button (click)="back()" expand="block">Zurück</ion-button>
+<ion-grid style="width: 100%;">
+  <ion-row>
+    <ion-col>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title>Kunde</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>Name</ion-label>
+              <span>{{kunde.name}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Vorname</ion-label>
+              <span>{{kunde.vorname}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Geburtdatum</ion-label>
+              <span>{{kunde.geburtsdatum}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Tel.:</ion-label>
+              <span>{{kunde.telefonNummer}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Mobile.:</ion-label>
+              <span>{{kunde.mobileNummer}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Mail</ion-label>
+              <span>{{kunde.mail}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Straße</ion-label>
+              <span>{{kunde.street}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Ort</ion-label>
+              <span>{{kunde.ort}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Postleitzahl</ion-label>
+              <span>{{kunde.plz}}</span>
+            </ion-item>
+          </ion-list>
+
+        </ion-card-content>
+
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title>Hund</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>Name</ion-label>
+              <span>{{kunde.hundName}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Rasse</ion-label>
+              <span>{{kunde.rasse}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Kastriet</ion-label>
+              <span>{{kunde.kastriert}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Geschlecht</ion-label>
+              <span>{{kunde.gender}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Sonstiges</ion-label>
+              <span>{{kunde.sonstiges}}</span>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title>Termine</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <app-detail-list></app-detail-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

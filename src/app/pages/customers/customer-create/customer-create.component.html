@@ -1,0 +1,123 @@
+<ion-button (click)="createCustomer()" expand="block">Neue Akte Anlegen</ion-button>
+<ion-grid style="width: 100%">
+  <ion-row>
+    <ion-col>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title>Kunde</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="Name" label="Name" labelPlacement="stacked"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="vorName" label="Vorname" labelPlacement="stacked"></ion-input>
+              </ion-col>
+
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="birthDate" label="GeburtsDatum" labelPlacement="stacked"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="telNumber" label="Telefon Nummer" labelPlacement="stacked"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="mobileNumber" label="SMobil" labelPlacement="stacked"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="mail" label="Email" labelPlacement="stacked" type="email"></ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </ion-card-content>
+
+      </ion-card>
+    </ion-col>
+    <ion-col >
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title>Adresse</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="street" label="Straße" labelPlacement="stacked"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="ort" label="Ort" labelPlacement="stacked"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-input [(ngModel)]="plz" label="PLZ" labelPlacement="stacked"></ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<ion-card color="light">
+  <ion-card-header>
+    <ion-card-title>Hund</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-input [(ngModel)]="dogName" label="Name" labelPlacement="stacked"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input [(ngModel)]="rasse" label="Rasse" labelPlacement="stacked"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span style="margin-right: 100px">Geschlecht</span>
+          <ion-radio-group value="maenlich">
+            <ion-radio value="maenlich">Mänlich</ion-radio>
+            <ion-radio class="radioSpace" value="weiblich">Weiblich</ion-radio>
+          </ion-radio-group>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span style="margin-right: 100px">Kastriet</span>
+          <ion-radio-group value="ja">
+            <ion-radio value="ja">Mänlich</ion-radio>
+            <ion-radio class="radioSpace" value="nein">Weiblich</ion-radio>
+          </ion-radio-group>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input [(ngModel)]="sonstiges" label="Sonstiges" labelPlacement="stacked"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card-content>
+
+
+</ion-card>
+

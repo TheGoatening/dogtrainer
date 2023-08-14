@@ -1,0 +1,23 @@
+  <ion-list [inset]="true">
+    <ion-item *ngFor="let termin of termine">
+      <span>{{termin.datum}}</span>
+      <ion-card color="light" style="width: 100%">
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>Amnese</ion-label>
+              <span>{{termin.amnese}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Prozess</ion-label>
+              <span>{{termin.process}}</span>
+            </ion-item>
+            <ion-item>
+              <ion-label>Sonstiges</ion-label>
+              <span>{{termin.sonstiges}}</span>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>

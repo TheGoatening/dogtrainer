@@ -1,0 +1,79 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-card color="light">
+        <ion-card-content>
+          <ion-grid>
+            <ion-row style="width: 60rem;margin-bottom: 20px">
+              <ion-col>
+                <ion-input [(ngModel)]="searchName" placeholder="Akten Suche"></ion-input>
+              </ion-col>
+              <ion-col style="align-self: first">
+                <ion-button style="margin-top: 25px">
+                  <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-radio-group value="hundeName">
+                  <ion-radio  value="hundeName">Hundename</ion-radio>
+                  <ion-radio class="radioSpace" value="nachName">Nachname</ion-radio>
+                  <ion-radio class="radioSpace" value="vorName">Vorname</ion-radio>
+                  <ion-radio class="radioSpace" value="hBirthDate">Geburtsdatum</ion-radio>
+                  <ion-radio class="radioSpace radioSpaceTop" value="dBirthDate">Hund Geburtsdatum</ion-radio>
+                  <ion-radio class="radioSpace radioSpaceTop" value="lastTrain">Letztes Training</ion-radio>
+                </ion-radio-group>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+
+        </ion-card-content>
+
+
+      </ion-card>
+    </ion-col>
+    <ion-col offset="3">
+      <ion-card color="light">
+
+        <ion-card-content>
+          <ion-list>
+            <ion-item lines="none">
+              <ion-button (click)="navigateToCreate()" expand="block">Neue Akte Anlegen</ion-button>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-button (click)="showAllCustomers()"expand="block">Alle Akten Anzeigen</ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<ion-card color="light">
+  <ion-card-header>
+    <ion-card-title>Kunden</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+        <ion-row style="border-bottom: groove;">
+          <ion-col>Name</ion-col>
+          <ion-col>Vorname</ion-col>
+          <ion-col>Hund</ion-col>
+        </ion-row>
+      <!--    ng-repeat="data in ctrl.data"-->
+        <ion-row *ngFor="let kunde of kundenListe" style="border-bottom: dotted;">
+          <ion-col>{{kunde.name}}</ion-col>
+          <ion-col>{{kunde.vorname}}</ion-col>
+          <ion-col>{{kunde.hundName}}</ion-col>
+          <ion-col>
+            <ion-button (click)="navigateToDetails(kunde.id)" expand="block">Details</ion-button>
+          </ion-col>
+        </ion-row>
+
+
+  </ion-card-content>
+</ion-card>

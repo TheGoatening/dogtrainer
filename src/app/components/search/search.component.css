@@ -1,0 +1,30 @@
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 2px;
+}
+
+mat-form-field.mat-form-field {
+  width: 100%;
+}
+
+.mat-grid-tile .mat-figure {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.radioSpace {
+  margin-left: 15px;
+}
+.radioSpace2 {
+  margin-left: 45px;
+}
+
+.radioSpaceTop {
+  margin-top: 10px;
+}
+
+/*ion-col {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  text-align: center;*/
+/*}*/
