@@ -65,7 +65,7 @@ export class CreateTerminComponent  implements OnInit, OnDestroy {
 
    await toast.present();
    this.cleanup();
-   // await this.router.navigate([this.cusid + 'details']);
+   this.router.navigate([this.cusid + '/details']);
   }
 
   cleanup() {

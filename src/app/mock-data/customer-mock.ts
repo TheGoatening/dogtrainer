@@ -18,8 +18,7 @@ export const MOCK_Customers: Customer[] = [
     kastriert: 1,
     gender: 1,
     hgeburtsdatum: '01.01.1993',
-    sonstiges: 'Was ein Hund dat ist',
-    inactive: 0
+    sonstiges: 'Was ein Hund dat ist'
   },
   {
     id: 2,
@@ -37,7 +36,6 @@ export const MOCK_Customers: Customer[] = [
     kastriert: 1,
     gender: 0,
     hgeburtsdatum: '01.01.1993',
-    sonstiges: 'Was ein Hund dat ist',
-    inactive: 0
+    sonstiges: 'Was ein Hund dat ist'
   }
 ];

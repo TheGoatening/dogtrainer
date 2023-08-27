@@ -29,7 +29,6 @@ export class Customer {
   gender!: number;
   hgeburtsdatum!: string;
   sonstiges!: string;
-  inactive!: number;
 }
 
 

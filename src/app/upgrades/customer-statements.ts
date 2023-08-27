@@ -18,8 +18,7 @@ export const customersVersionUpgrades = [
           kastriert integer NOT NULL,
           gender integer NOT NULL,
           hgeburtsdatum varchar(255) NOT NULL,
-          sonstiges varchar(255) NOT NULL,
-          inactive integer NOT NULL
+          sonstiges varchar(255) NOT NULL
         );`,
           `CREATE TABLE IF NOT EXISTS termine (
           id integer PRIMARY KEY AUTOINCREMENT NOT NULL,

@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {Router, RouterModule} from "@angular/router";
-import {IonicModule} from "@ionic/angular";
+import {IonicModule, ToastController} from "@ionic/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DogDbService} from "../../../services/dog-db.service";
-import {Department} from "../../../models/employee-dept";
 import {Customer} from "../../../models/dog-trainer";
 
 @Component({
@@ -20,7 +19,8 @@ export class CustomerCreateComponent {
 
   constructor(
     private router: Router,
-    private DogDbService: DogDbService ) {
+    private DogDbService: DogDbService,
+    private toastController: ToastController) {
   }
 
   Name: string = '';
@@ -39,12 +39,6 @@ export class CustomerCreateComponent {
   gender: number = 0;
   kastriet: number = 0;
 
-
-  // createCustomer() {
-  //   // this.DogDbService.getCustomer();
-  //   console.log('customerCreated')
-  //   this.router.navigate(['']);
-  // }
 
   back() {
     this.router.navigate(['']);
@@ -73,5 +67,12 @@ export class CustomerCreateComponent {
     outCustomer.kastriert = this.kastriet;
 
    await this.DogDbService.addCustomer(outCustomer);
+    const toast = await this.toastController.create({
+      message: 'Kunde wurde Erstellt',
+      duration: 1500,
+      position: 'middle',
+    });
+   await this.router.navigate(['']);
   }
+
 }
