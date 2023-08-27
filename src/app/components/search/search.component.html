@@ -9,20 +9,20 @@
                 <ion-input [(ngModel)]="searchName" placeholder="Akten Suche"></ion-input>
               </ion-col>
               <ion-col style="align-self: first">
-                <ion-button style="margin-top: 25px">
+                <ion-button (click)="searchBar()" style="margin-top: 25px">
                   <ion-icon slot="icon-only" name="search-outline"></ion-icon>
                 </ion-button>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-radio-group value="hundeName">
-                  <ion-radio  value="hundeName">Hundename</ion-radio>
-                  <ion-radio class="radioSpace" value="nachName">Nachname</ion-radio>
-                  <ion-radio class="radioSpace" value="vorName">Vorname</ion-radio>
-                  <ion-radio class="radioSpace" value="hBirthDate">Geburtsdatum</ion-radio>
-                  <ion-radio class="radioSpace radioSpaceTop" value="dBirthDate">Hund Geburtsdatum</ion-radio>
-                  <ion-radio class="radioSpace radioSpaceTop" value="lastTrain">Letztes Training</ion-radio>
+                <ion-radio-group [(ngModel)]="searchType" value="'hundName'">
+                  <ion-radio  value="hundName">Hundename</ion-radio>
+                  <ion-radio class="radioSpace" value="name">Name</ion-radio>
+                  <ion-radio class="radioSpace" value="vorname">Vorname</ion-radio>
+                  <ion-radio class="radioSpace" value="geburtsdatum">Geburtsdatum</ion-radio>
+                  <ion-radio class="radioSpace radioSpaceTop" value="hgeburtsdatum">Hund Geburtsdatum</ion-radio>
+<!--                  <ion-radio class="radioSpace radioSpaceTop" value="lastTrain">Letztes Training</ion-radio>-->
                 </ion-radio-group>
               </ion-col>
 
@@ -58,11 +58,12 @@
   <ion-card-header>
     <ion-card-title>Kunden</ion-card-title>
   </ion-card-header>
-  <ion-card-content>
+  <ion-card-content style="overflow: auto">
         <ion-row style="border-bottom: groove;">
           <ion-col>Name</ion-col>
           <ion-col>Vorname</ion-col>
           <ion-col>Hund</ion-col>
+          <ion-col>Aktionen</ion-col>
         </ion-row>
       <!--    ng-repeat="data in ctrl.data"-->
         <ion-row *ngFor="let kunde of kundenListe" style="border-bottom: dotted;">

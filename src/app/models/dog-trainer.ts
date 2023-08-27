@@ -5,11 +5,11 @@ export class CustomerData {
 
 export class Termin {
   id!: number;
-  customerId!: number;
   datum!: string;
   amnese!: string;
   process!: string;
   sonstiges!: string;
+  cusid!: string;
 }
 
 export class Customer {
@@ -25,10 +25,11 @@ export class Customer {
   plz!: string;
   hundName!: string;
   rasse!: string;
-  kastriert!: string;
-  gender!: string;
+  kastriert!: number;
+  gender!: number;
   hgeburtsdatum!: string;
   sonstiges!: string;
+  inactive!: number;
 }
 
 

@@ -1,43 +1,54 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Customer} from "../../../models/dog-trainer";
 import {CommonModule} from "@angular/common";
-import {Router, RouterModule} from "@angular/router";
+import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {IonicModule} from "@ionic/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DetailListComponent} from "../detail-list/detail-list.component";
+import {DogDbService} from "../../../services/dog-db.service";
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css'],
   imports: [CommonModule, DetailListComponent, RouterModule, IonicModule, FormsModule, ReactiveFormsModule],
-  standalone:true
+  standalone: true
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit, AfterViewInit {
+  kunde!: Customer;
+  customerId!: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private DogDbService: DogDbService,
+              private route: ActivatedRoute
+  ) {
+  };
+
+  async ngOnInit() {
+    this.customerId = this.route.snapshot.paramMap.get('id') || '';
+    await this.DogDbService.getCustomerById(this.customerId);
+    try {
+      this.DogDbService.customerItemState().subscribe((res) => {
+        if (res) {
+          this.DogDbService.fetchCustomerItem().subscribe(data => {
+            this.kunde = data[0];
+          });
+        }
+      });
+    } catch (err) {
+      throw new Error(`Error: ${err}`);
+    }
   }
 
-  kunde: Customer = {
-    id: 1,
-    name: 'Mustermensch',
-    vorname: 'Jürgen',
-    geburtsdatum: '01.01.1993',
-    telefonNummer: '015788888',
-    mobileNummer: '015788888',
-    mail: 'mustermail@muster.de',
-    street: 'Musterstraße',
-    ort: 'Musterstadt',
-    plz: '42069',
-    hundName: 'Rexo',
-    rasse: 'GoldenMuster',
-    kastriert: 'Ja',
-    gender: 'Weiblich',
-    hgeburtsdatum: '01.01.1993',
-    sonstiges: 'Was ein Hund dat ist',
-  };
+  async ngAfterViewInit() {
+
+  }
 
   back() {
     this.router.navigate(['']);
+  }
+
+  createNewTermin() {
+    this.router.navigate([this.customerId + '/newTermin'])
   }
 }

@@ -1,14 +1,14 @@
-import { SQLiteDBConnection } from '@capacitor-community/sqlite';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {SQLiteDBConnection} from '@capacitor-community/sqlite';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 
-import { SQLiteService } from './sqlite.service';
-import { DbnameVersionService } from './dbname-version.service';
+import {SQLiteService} from './sqlite.service';
+import {DbnameVersionService} from './dbname-version.service';
 
-import { environment } from 'src/environments/environment';
-import { authorPostsVersionUpgrades } from 'src/app/upgrades/author-posts/upgrade-statements';
+import {environment} from 'src/environments/environment';
+import {authorPostsVersionUpgrades} from 'src/app/upgrades/author-posts/upgrade-statements';
 
-import { JsonPost, Post, Author, Category, PostData } from '../models/author-posts';
+import {JsonPost, Post, Author, Category, PostData} from '../models/author-posts';
 
 import {Customer, Termin} from "../models/dog-trainer";
 import {MOCK_Customers} from "../mock-data/customer-mock";
@@ -26,49 +26,47 @@ export class DogDbService {
   private iscustomerItemReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private isAppointmentListReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private versionUpgrades = customersVersionUpgrades;
-  private loadToVersion = customersVersionUpgrades[customersVersionUpgrades.length-1].toVersion;
+  private loadToVersion = customersVersionUpgrades[customersVersionUpgrades.length - 1].toVersion;
   private mDb!: SQLiteDBConnection;
 
-  constructor(  private sqliteService: SQLiteService,
-                private dbVerService: DbnameVersionService,
+  constructor(private sqliteService: SQLiteService,
+              private dbVerService: DbnameVersionService,
   ) {
-    this.databaseName = environment.databaseNames.filter(x => x.name.includes('dog'))[0].name;
-    console.log(this.databaseName);
+    this.databaseName = "dog_trainer"
   }
 
   async initializeDatabase() {
     // create upgrade statements
     await this.sqliteService
-      .addUpgradeStatement({ database: this.databaseName,
-        upgrade: this.versionUpgrades});
+      .addUpgradeStatement({
+        database: this.databaseName,
+        upgrade: this.versionUpgrades
+      });
     // create and/or open the database
     await this.openDatabase();
-    console.log('after open Database')
-    this.dbVerService.set(this.databaseName,this.loadToVersion);
-    const isData = await this.mDb.query("select * from sqlite_sequence");
-    // create database initial data
-    if(isData.values!.length === 0) {
-      await this.createInitialData();
-    }
-    if( this.sqliteService.platform === 'web') {
+    this.dbVerService.set(this.databaseName, this.loadToVersion);
+    // const isData = await this.mDb.query("select * from sqlite_sequence");
+    // // create database initial data
+    // if(isData.values!.length === 0) {
+    await this.createInitialData();
+    // }
+    if (this.sqliteService.platform === 'web') {
       await this.sqliteService.sqliteConnection.saveToStore(this.databaseName);
     }
     await this.getAllData();
   }
 
   async openDatabase() {
-    if((this.sqliteService.native || this.sqliteService.platform === "electron")
+    if ((this.sqliteService.native || this.sqliteService.platform === "electron")
       && (await this.sqliteService.isInConfigEncryption()).result
       && (await this.sqliteService.isDatabaseEncrypted(this.databaseName)).result) {
       this.mDb = await this.sqliteService
         .openDatabase(this.databaseName, true, "secret",
-          this.loadToVersion,false);
-console.log('in open Database if')
+          this.loadToVersion, false);
     } else {
-      console.log('in open Database else')
       this.mDb = await this.sqliteService
         .openDatabase(this.databaseName, false, "no-encryption",
-          this.loadToVersion,false);
+          this.loadToVersion, false);
     }
   }
 
@@ -76,6 +74,7 @@ console.log('in open Database if')
     await this.getAllCustomers();
     this.isCustomerDataListReady.next(true);
   }
+
   /**
    * Return CustomerDataList state
    * @returns
@@ -83,6 +82,7 @@ console.log('in open Database if')
   customerDataListReady() {
     return this.isCustomerDataListReady.asObservable();
   }
+
   /**
    * Return CustomerItem state
    * @returns
@@ -90,6 +90,7 @@ console.log('in open Database if')
   customerItemState() {
     return this.iscustomerItemReady.asObservable();
   }
+
   /**
    * Return AppointmentList state
    * @returns
@@ -97,6 +98,7 @@ console.log('in open Database if')
   appointmentListState() {
     return this.isAppointmentListReady.asObservable();
   }
+
   /**
    * Fetch CustomerList
    * @returns
@@ -104,6 +106,7 @@ console.log('in open Database if')
   fetchCustomers(): Observable<Customer[]> {
     return this.customerList.asObservable();
   }
+
   /**
    * Fetch AppointmentList
    * @returns
@@ -111,6 +114,7 @@ console.log('in open Database if')
   fetchAppointments(): Observable<Termin[]> {
     return this.appointmentListForCustomer.asObservable();
   }
+
   /**
    * Fetch Customer
    * @returns
@@ -124,7 +128,7 @@ console.log('in open Database if')
    * @returns
    */
   async getCustomer(jsonCustomer: Customer): Promise<Customer> {
-    let customer = await this.sqliteService.findOneBy(this.mDb, "Customers", {id: jsonCustomer.id});
+    let customer = await this.sqliteService.findOneBy(this.mDb, "customer", {id: jsonCustomer.id});
     if (!customer) {
       if (jsonCustomer.vorname && jsonCustomer.name) {
         // create a new author
@@ -152,8 +156,8 @@ console.log('in open Database if')
           customer.sonstiges = jsonCustomer.sonstiges;
         }
 
-        await this.sqliteService.save(this.mDb, "Customers", customer);
-        customer = await this.sqliteService.findOneBy(this.mDb, "Customers", {id: jsonCustomer.id});
+        await this.sqliteService.save(this.mDb, "customer", customer);
+        customer = await this.sqliteService.findOneBy(this.mDb, "customer", {id: jsonCustomer.id});
         if (customer) {
           return customer;
         } else {
@@ -190,8 +194,8 @@ console.log('in open Database if')
             updCustomer.hgeburtsdatum = jsonCustomer.hgeburtsdatum;
             updCustomer.sonstiges = jsonCustomer.sonstiges;
           }
-          await this.sqliteService.save(this.mDb, "Customers", updCustomer, {id: jsonCustomer.id});
-          customer = await this.sqliteService.findOneBy(this.mDb, "Customers", {id: jsonCustomer.id});
+          await this.sqliteService.save(this.mDb, "customer", updCustomer, {id: jsonCustomer.id});
+          customer = await this.sqliteService.findOneBy(this.mDb, "customer", {id: jsonCustomer.id});
           if (customer) {
             return customer;
           } else {
@@ -202,26 +206,92 @@ console.log('in open Database if')
         }
       }
     }
-      return customer;
-    }
+    return customer;
+  }
+
+  async getCustomerById(id: string) {
+    let customerList: Customer[] = [];
+    const customer = await this.sqliteService.findOneBy(this.mDb, "customer", {id: id});
+    customerList.push(customer)
+    this.customerItem.next(customerList);
+    this.iscustomerItemReady.next(true);
+  }
+
+  async addCustomer(jsonCustomer: Customer) {
+    const result = await this.sqliteService.save(this.mDb, "customer", jsonCustomer);
+    await this.getAllCustomers();
+  }
+
   /**
    * Delete an Customer
    * @returns
    */
-  async deleteCustomer(jsonCustomer: Author): Promise<void>  {
-    let customer = await this.sqliteService.findOneBy(this.mDb, "Customers", {id: jsonCustomer.id});
-    if( customer) {
-      await this.sqliteService.remove(this.mDb, "Customers", {id: jsonCustomer.id});
+  async deleteCustomer(jsonCustomer: Customer): Promise<void> {
+    let customer = await this.sqliteService.findOneBy(this.mDb, "customer", {id: jsonCustomer.id});
+    if (customer) {
+      await this.sqliteService.remove(this.mDb, "customer", {id: jsonCustomer.id});
     }
     return;
   }
+
   /**
    * Get all Customers
    * @returns
    */
   async getAllCustomers(): Promise<void> {
-    const customers: Customer[] = (await this.mDb.query("select * from Customers")).values as Customer[];
+    const customers: Customer[] = (await this.mDb.query("select * from customer")).values as Customer[];
     this.customerList.next(customers);
+    this.isCustomerDataListReady.next(true);
+  }
+
+  async getAllCustomersBasedOnSearch(search: string, searchType: string): Promise<void> {
+    switch (searchType) {
+      // case 'id': {
+      //   break;
+      // }
+      case 'name': {
+        console.log('in name')
+        const customers: Customer[] = (await this.mDb.query(`select * from customer where UPPER(name) LIKE '%${search}%'`)).values as Customer[];
+        this.customerList.next(customers);
+        this.isCustomerDataListReady.next(true);
+        break;
+      }
+      case 'vorname': {
+        console.log('in vorname')
+        const customers: Customer[] = (await this.mDb.query(`select * from customer where UPPER(vorname) LIKE '%${search}%'`)).values as Customer[];
+        this.customerList.next(customers);
+        this.isCustomerDataListReady.next(true);
+        break;
+      }
+      case 'hundName': {
+        console.log('in hundname')
+        const customers: Customer[] = (await this.mDb.query(`select * from customer where UPPER(hundName) LIKE '%${search}%'`)).values as Customer[];
+        this.customerList.next(customers);
+        this.isCustomerDataListReady.next(true);
+        break;
+      }
+      case 'geburtsdatum': {
+        console.log('in geburtsdatum')
+        const customers: Customer[] = (await this.mDb.query(`select * from customer where UPPER(geburtsdatum) LIKE '%${search}%'`)).values as Customer[];
+        this.customerList.next(customers);
+        this.isCustomerDataListReady.next(true);
+        break;
+      }
+      case 'hgeburtsdatum': {
+        console.log('in hgeburtsdatum')
+        const customers: Customer[] = (await this.mDb.query(`select * from customer where UPPER(hgeburtsdatum) LIKE '%${search}%'`)).values as Customer[];
+        this.customerList.next(customers);
+        this.isCustomerDataListReady.next(true);
+        break;
+      }
+      // case 'training': {
+      //   break;
+      // }
+      default: {
+        break;
+      }
+
+    }
   }
 
 
@@ -229,29 +299,25 @@ console.log('in open Database if')
    * Get all Termine for Customer
    * @returns
    */
-  async getAllTermineForCustomer(id: number): Promise<void> {
-    const termineForCustomer: Termin[] = (await this.mDb.query("select * from Termine whenever Termine.customerId = "+ id +" ")).values as Termin[];
+  async getAllTermineForCustomer(id: string): Promise<void> {
+    const termineForCustomer: Termin[] = (await this.mDb.query("select * from termine where termine.cusid = " + id + " ")).values as Termin[];
     this.appointmentListForCustomer.next(termineForCustomer);
+    this.isAppointmentListReady.next(true);
   }
-  async makeNewTermin(jsonTermin: Termin): Promise<void> {
-    let retTermin = await this.sqliteService.findOneBy(this.mDb, "Termine", {id: jsonTermin.id});
-    if (!retTermin) {
-      if (jsonTermin.customerId) {
-        // create a new Post
-        const termin: Termin = await this.createTermin(jsonTermin);
-        await this.sqliteService.save(this.mDb, "Termine", termin);
-      }
+
+  async makeNewTermin(jsonTermin: Termin) {
+      const result = await this.sqliteService.save(this.mDb, "termine", jsonTermin);
+      this.getAllTermineForCustomer(jsonTermin.cusid);
     }
-  }
 
   /**
    * Delete a termin
    * @returns
    */
-  async deleteTermin(jsonTermim: Termin): Promise<void>  {
-    let termin = await this.sqliteService.findOneBy(this.mDb, "Termine", {id: jsonTermim.id});
-    if( termin) {
-      await this.sqliteService.remove(this.mDb, "Termine", {id: jsonTermim.id});;
+  async deleteTermin(jsonTermim: Termin): Promise<void> {
+    let termin = await this.sqliteService.findOneBy(this.mDb, "termine", {id: jsonTermim.id});
+    if (termin) {
+      await this.sqliteService.remove(this.mDb, "termine", {id: jsonTermim.id});
     }
   }
 
@@ -270,6 +336,7 @@ console.log('in open Database if')
     }
 
   }
+
   /**
    * Create Termin
    * @returns
@@ -282,10 +349,10 @@ console.log('in open Database if')
     termin.process = jsonTermin.process
     termin.sonstiges = jsonTermin.sonstiges
 
-    if(jsonTermin.customerId) {
-      const customer: Customer = await this.sqliteService.findOneBy(this.mDb, "Customers", {id: jsonTermin.customerId});
-      if(customer)
-        termin.customerId =  jsonTermin.customerId;
+    if (jsonTermin.cusid) {
+      const customer: Customer = await this.sqliteService.findOneBy(this.mDb, "customer", {id: jsonTermin.cusid});
+      if (customer)
+        termin.cusid = jsonTermin.cusid;
     }
     return termin;
   }

@@ -6,46 +6,6 @@ import {Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {DogDbService} from "../../services/dog-db.service";
 // import {DatabaseManagerService} from "../../services/database-manager.service";
-const ELEMENT_DATA: Customer[] = [
-  {
-      id: 1,
-      name: 'Mustermensch',
-      vorname: 'Jürgen',
-      geburtsdatum: '01.01.1993',
-      telefonNummer: '015788888',
-      mobileNummer: '015788888',
-      mail: 'mustermail@muster.de',
-      street: 'Musterstraße',
-      ort: 'Musterstadt',
-      plz: '42069',
-      hundName: 'Rexo',
-      rasse: 'GoldenMuster',
-      kastriert: 'Ja',
-      gender: 'Weiblich',
-      hgeburtsdatum: '01.01.1993',
-      sonstiges: 'Was ein Hund dat ist',
-
-  },
-  {
-
-      id: 2,
-      name: 'Musteralien',
-      vorname: 'Sibille',
-      geburtsdatum: '01.01.1993',
-      telefonNummer: '015788888',
-      mobileNummer: '015788888',
-      mail: 'mustermail@muster.de',
-      street: 'Musterstraße',
-      ort: 'Musterstadt',
-      plz: '42069',
-      hundName: 'Astro',
-      rasse: 'GoldenMuster',
-      kastriert: 'nein',
-      gender: 'Mänlich',
-      hgeburtsdatum: '01.01.1993',
-      sonstiges: 'Was ein Hund dat ist'
-  }
-];
 
 @Component({
   selector: 'general-search',
@@ -58,6 +18,8 @@ export class SearchComponent implements OnInit {
   public kundenListe: Customer[] = [];
   private isUpdate: boolean = false;
   searchName: string = '';
+  searchType: string = 'hundName';
+
 
 
   constructor(
@@ -67,9 +29,13 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+ async showAllCustomers() {
     try {
-      this.isUpdate = false;
-      this.DogDbService.customerDataListReady().subscribe((res) => {
+      await this.DogDbService.getAllCustomers();
+     await this.DogDbService.customerDataListReady().subscribe((res) => {
         if(res) {
           this.DogDbService.fetchCustomers().subscribe(data => {
             this.kundenListe = data;
@@ -81,12 +47,23 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  showAllCustomers() {
-    // this.databaseService.getAllCustomersWithDogsForSearch();
-    this.kundenListe = ELEMENT_DATA;
+  async searchBar() {
+    try {
+     await this.DogDbService.getAllCustomersBasedOnSearch(this.searchName, this.searchType);
+     await this.DogDbService.customerDataListReady().subscribe((res) => {
+        if(res) {
+         this.DogDbService.fetchCustomers().subscribe(data => {
+            this.kundenListe = data;
+          });
+        }
+      });
+    } catch(err) {
+      throw new Error(`Error: ${err}`);
+    }
   }
 
   navigateToDetails(id: number) {
+    console.log(id);
     this.router.navigate([id + '/details'])
   }
 

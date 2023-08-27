@@ -28,10 +28,10 @@ export class InitializeAppService {
           await this.sqliteService.initWebStore();
         }
 
-        // Initialize the starter_posts database
-        await this.authorPostsService.initializeDatabase();
-        // Initialize the starter_employees database
-        await this.departmentEmployeesService.initializeDatabase();
+        // // Initialize the starter_posts database
+        // await this.authorPostsService.initializeDatabase();
+        // // Initialize the starter_employees database
+        // await this.departmentEmployeesService.initializeDatabase();
         // Initialize any other database if any
         await this.dogDbService.initializeDatabase();
 

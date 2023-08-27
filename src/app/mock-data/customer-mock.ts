@@ -13,16 +13,15 @@ export const MOCK_Customers: Customer[] = [
     street: 'Musterstraße',
     ort: 'Musterstadt',
     plz: '42069',
-    hundName: 'Rexo',
+    hundName: 'HundoMan',
     rasse: 'GoldenMuster',
-    kastriert: 'Ja',
-    gender: 'Weiblich',
+    kastriert: 1,
+    gender: 1,
     hgeburtsdatum: '01.01.1993',
     sonstiges: 'Was ein Hund dat ist',
-
+    inactive: 0
   },
   {
-
     id: 2,
     name: 'Musteralien',
     vorname: 'Sibille',
@@ -35,9 +34,10 @@ export const MOCK_Customers: Customer[] = [
     plz: '42069',
     hundName: 'Astro',
     rasse: 'GoldenMuster',
-    kastriert: 'Ja',
-    gender: 'Mänlich',
+    kastriert: 1,
+    gender: 0,
     hgeburtsdatum: '01.01.1993',
-    sonstiges: 'Was ein Hund dat ist'
+    sonstiges: 'Was ein Hund dat ist',
+    inactive: 0
   }
 ];

@@ -1,10 +1,10 @@
 <ion-button (click)="back()" expand="block">Zurück</ion-button>
-<ion-grid style="width: 100%;">
+<ion-grid *ngIf="kunde" style="width: 100%; overflow: auto">
   <ion-row>
     <ion-col>
       <ion-card color="light">
         <ion-card-header>
-          <ion-card-title>Kunde</ion-card-title>
+          <ion-card-title>Kunde ({{kunde.id}})</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <ion-list>
@@ -62,6 +62,10 @@
               <span>{{kunde.hundName}}</span>
             </ion-item>
             <ion-item>
+              <ion-label>Geburtstag</ion-label>
+              <span>{{kunde.hgeburtsdatum}}</span>
+            </ion-item>
+            <ion-item>
               <ion-label>Rasse</ion-label>
               <span>{{kunde.rasse}}</span>
             </ion-item>
@@ -88,7 +92,18 @@
     <ion-col>
       <ion-card color="light">
         <ion-card-header>
-          <ion-card-title>Termine</ion-card-title>
+          <ion-grid style="width: 100%">
+            <ion-row>
+              <ion-col>
+                <ion-card-title>Termine</ion-card-title>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="createNewTermin()" expand="block" style="margin-left: 300px; max-width: 50%">Termin
+                  erstellen
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-card-header>
         <ion-card-content>
           <app-detail-list></app-detail-list>
