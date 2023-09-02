@@ -4,7 +4,21 @@
     <ion-col>
       <ion-card color="light">
         <ion-card-header>
-          <ion-card-title>Kunde ({{kunde.id}})</ion-card-title>
+          <ion-grid *ngIf="kunde" style="width: 140%">
+            <ion-row style="width: 70%">
+              <ion-col class="ion-text-start">
+                <ion-card-title>Kunde ({{kunde.id}})</ion-card-title>
+              </ion-col>
+              <ion-col class="ion-text-end">
+                <ion-button style="max-width: 20%" (click)="updateCustomer()">
+                  <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+                </ion-button>
+                <ion-button style="max-width: 20%" (click)="deleteCustomer()">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-card-header>
         <ion-card-content>
           <ion-list>
@@ -97,9 +111,9 @@
               <ion-col>
                 <ion-card-title>Termine</ion-card-title>
               </ion-col>
-              <ion-col>
-                <ion-button (click)="createNewTermin()" expand="block" style="margin-left: 300px; max-width: 50%">Termin
-                  erstellen
+              <ion-col class="ion-text-end">
+                <ion-button style="max-width: 20%" (click)="createNewTermin()">
+                  <ion-icon slot="icon-only" name="add-outline"></ion-icon>
                 </ion-button>
               </ion-col>
             </ion-row>

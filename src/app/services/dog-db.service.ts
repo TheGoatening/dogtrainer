@@ -21,9 +21,11 @@ export class DogDbService {
   public customerList: BehaviorSubject<Customer[]> = new BehaviorSubject<Customer[]>([]);
   public customerItem: BehaviorSubject<Customer[]> = new BehaviorSubject<Customer[]>([]);
   public appointmentListForCustomer: BehaviorSubject<Termin[]> = new BehaviorSubject<Termin[]>([]);
+  public appointmentItem: BehaviorSubject<Termin[]> = new BehaviorSubject<Termin[]>([]);
 
   private isCustomerDataListReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private iscustomerItemReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isAppointmentItemReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private isAppointmentListReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private versionUpgrades = customersVersionUpgrades;
   private loadToVersion = customersVersionUpgrades[customersVersionUpgrades.length - 1].toVersion;
@@ -121,6 +123,22 @@ export class DogDbService {
    */
   fetchCustomerItem(): Observable<Customer[]> {
     return this.customerItem.asObservable();
+  }
+
+  /**
+   * Fetch Appointment
+   * @returns
+   */
+  fetchAppointment(): Observable<Termin[]> {
+    return this.appointmentItem.asObservable();
+  }
+
+  /**
+   * Return CustomerItem state
+   * @returns
+   */
+  appointmentItemState() {
+    return this.isAppointmentItemReady.asObservable();
   }
 
   /**
@@ -222,15 +240,22 @@ export class DogDbService {
     await this.getAllCustomers();
   }
 
+  async updateCustomer(updCustomer: Customer) {
+    const result = await this.sqliteService.save(this.mDb, "customer", updCustomer, {id: updCustomer.id});
+    await this.getAllCustomers();
+  }
+
   /**
    * Delete an Customer
    * @returns
    */
   async deleteCustomer(jsonCustomer: Customer): Promise<void> {
+    console.log(`in deletion with kunde = ${jsonCustomer}`)
     let customer = await this.sqliteService.findOneBy(this.mDb, "customer", {id: jsonCustomer.id});
     if (customer) {
       await this.sqliteService.remove(this.mDb, "customer", {id: jsonCustomer.id});
     }
+    await this.getAllCustomers();
     return;
   }
 
@@ -305,8 +330,19 @@ export class DogDbService {
     this.isAppointmentListReady.next(true);
   }
 
+  async getAppointmentById(aid: string) {
+    const termine: Termin[] = (await this.mDb.query("select * from termine where termine.id = " + aid + " ")).values as Termin[];
+    this.appointmentItem.next(termine);
+    this.isAppointmentItemReady.next(true);
+  }
+
   async makeNewTermin(jsonTermin: Termin) {
       const result = await this.sqliteService.save(this.mDb, "termine", jsonTermin);
+      this.getAllTermineForCustomer(jsonTermin.cusid);
+    }
+
+    async updateTermin(jsonTermin: Termin) {
+      await this.sqliteService.save(this.mDb, "termine", jsonTermin, {id: jsonTermin.id});
       this.getAllTermineForCustomer(jsonTermin.cusid);
     }
 
@@ -314,10 +350,12 @@ export class DogDbService {
    * Delete a termin
    * @returns
    */
-  async deleteTermin(jsonTermim: Termin): Promise<void> {
-    let termin = await this.sqliteService.findOneBy(this.mDb, "termine", {id: jsonTermim.id});
+  async deleteTermin(jsonTermin: Termin) {
+    console.log("in deletion")
+    let termin = await this.sqliteService.findOneBy(this.mDb, "termine", {id: jsonTermin.id});
     if (termin) {
-      await this.sqliteService.remove(this.mDb, "termine", {id: jsonTermim.id});
+      await this.sqliteService.remove(this.mDb, "termine", {id: jsonTermin.id});
+      await this.getAllTermineForCustomer(jsonTermin.cusid);
     }
   }
 

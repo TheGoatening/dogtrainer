@@ -1,0 +1,49 @@
+<div *ngIf="termin" style="overflow: auto">
+  <ion-grid style=" border: 0; width: 100%; height: 10%">
+    <ion-row>
+      <ion-col style=" border: 0">
+        <ion-button (click)="back()" expand="block">Zurück</ion-button>
+      </ion-col>
+      <ion-col style=" border: 0">
+        <ion-button (click)="updateTermin()" expand="block">Update</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid style="width: 100%">
+    <ion-row>
+      <ion-col>
+        <ion-card color="light">
+          <ion-card-header>
+            <ion-card-title>Termin</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-input [(ngModel)]="termin.datum" label="Datum" labelPlacement="stacked"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-input [(ngModel)]="termin.amnese" label="Amnese" labelPlacement="stacked"></ion-input>
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-input [(ngModel)]="termin.process" label="Process" labelPlacement="stacked"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-input [(ngModel)]="termin.sonstiges" label="Sonstiges" labelPlacement="stacked"></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

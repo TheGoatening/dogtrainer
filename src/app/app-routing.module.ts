@@ -5,6 +5,7 @@ import {DetailsComponent} from "./pages/detail-pages/details/details.component";
 import {CustomerCreateComponent} from "./pages/customers/customer-create/customer-create.component";
 import {CustomerUpdateComponent} from "./pages/customers/customer-update/customer-update.component";
 import {CreateTerminComponent} from "./pages/detail-pages/create-termin/create-termin.component";
+import {UpdateTerminComponent} from "./pages/detail-pages/update-termin/update-termin.component";
 
 
 const routes: Routes = [
@@ -22,16 +23,20 @@ const routes: Routes = [
     component: DetailsComponent,
   },
   {
-    path: ':id/newTermin',
-    component: CreateTerminComponent
-  },
-  {
     path: 'newCustomer',
     component: CustomerCreateComponent
   },
   {
     path: ':id/editCustomer',
     component: CustomerUpdateComponent
+  },
+  {
+    path: ':id/newTermin',
+    component: CreateTerminComponent
+  },
+  {
+    path: ':id/updateTermin/:aid',
+    component: UpdateTerminComponent
   },
 ];
 

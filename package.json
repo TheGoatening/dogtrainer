@@ -2,7 +2,7 @@
   "name": "ionic7-angular-sqlite-starter",
   "version": "0.0.3",
   "description": "Ionic7/Angular SQLite Starter Application",
-  "author": "Jean Pierre Quéau",
+  "author": "Jean Pierre Quéau | Alexander Verlage",
   "license": "MIT",
   "homepage": "./",
   "scripts": {

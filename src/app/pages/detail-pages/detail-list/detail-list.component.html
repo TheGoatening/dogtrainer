@@ -1,6 +1,23 @@
   <ion-list [inset]="true">
     <ion-item *ngFor="let termin of termine">
-      <span>{{termin.datum}}</span>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-text-start">
+            <span>{{termin.datum}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-end">
+            <ion-button (click)="editAppointment(termin.id)">
+              <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="deleteAppointment(termin)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
       <ion-card color="light" style="width: 100%">
         <ion-card-content>
           <ion-list>

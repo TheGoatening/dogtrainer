@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Customer, Termin} from "../../../models/dog-trainer";
 import {CommonModule} from "@angular/common";
-import {ActivatedRoute, RouterModule} from "@angular/router";
+import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {IonicModule} from "@ionic/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DogDbService} from "../../../services/dog-db.service";
@@ -18,7 +18,8 @@ export class DetailListComponent implements OnInit{
 
   constructor(
     private DogDbService: DogDbService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -39,13 +40,14 @@ export class DetailListComponent implements OnInit{
     }
   }
 
- //  termine: Termin[] = [{
- //   id: 1,
- //  customerId: 1,
- //  datum: '01.01.2023',
- //  amnese: 'Ganz wild',
- //  process: 'springen',
- //  sonstiges: 'mal schauen',
- // }]
+  editAppointment(appointmentId: number) {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.router.navigate([id + '/updateTermin/' + appointmentId])
+  }
+
+ async deleteAppointment(appointment: Termin) {
+    console.log("in FE deletion");
+    await this.DogDbService.deleteTermin(appointment);
+  }
 
 }
